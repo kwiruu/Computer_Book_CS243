@@ -1,11 +1,14 @@
 ; CS243 October 6, 2023
 ; Keiru Vent O. Cabili
-; Lab exer1
-; This code prints 5 of the many classmates keiru knew
+; Lab exer2
+; This code prints 5 of the computer books
 
 section .data
 	header:   db 'Cebu Institute of Technology – University',10,
-	db 'College of Computer Studies', 10, 'CS243 Computer Organization and Architecture', 10, 'First Semester Academic Year 2023-2024',10,10,'CLASS LIST'   ; text of the header plus a linefeed character
+	          db 'College of Computer Studies', 10, 
+	          db 'CS243 Computer Organization and Architecture', 10,
+	          db 'First Semester Academic Year 2023-2024',10,10,
+	          db 'CLASS LIST'   ; text of the header plus a linefeed character
 	headerLen:  equ $-header                ;Length of the header string
 	
 	footer: db 10,10,'Programmer Name: Keiru Vent O. Cabili',10,'Date: October 6, 2023'
@@ -183,8 +186,8 @@ _start:
 	;student no.1's Id Number
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, idno1        ; Put the offset of this variable in ecx
-	mov edx, idno1Len     ; this length is a constant, so we don't need to say
+	mov ecx, idno1       ; Put the offset of this variable in ecx
+	mov edx, idno1Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -192,15 +195,15 @@ _start:
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
 	mov ecx, lname       ; Put the offset of this variable in ecx
-	mov edx, lnameLen     ; this length is a constant, so we don't need to say
+	mov edx, lnameLen    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
 	;student no.1's Last Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, lname1       ; Put the offset of this variable in ecx
-	mov edx, lname1Len     ; this length is a constant, so we don't need to say
+	mov ecx, lname1      ; Put the offset of this variable in ecx
+	mov edx, lname1Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -215,8 +218,8 @@ _start:
 	;student no.1's First Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, fname1       ; Put the offset of this variable in ecx
-	mov edx, fname1Len    ; this length is a constant, so we don't need to say
+	mov ecx, fname1      ; Put the offset of this variable in ecx
+	mov edx, fname1Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -231,8 +234,8 @@ _start:
 	;student no.1's Middle Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, mname1       ; Put the offset of this variable in ecx
-	mov edx, mname1Len    ; this length is a constant, so we don't need to say
+	mov ecx, mname1      ; Put the offset of this variable in ecx
+	mov edx, mname1Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -247,8 +250,8 @@ _start:
 	;student no.1's course
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, course1      ; Put the offset of this variable in ecx
-	mov edx, course1Len   ; this length is a constant, so we don't need to say
+	mov ecx, course1     ; Put the offset of this variable in ecx
+	mov edx, course1Len  ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -263,8 +266,8 @@ _start:
 	;student no.1's Year Level
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, ylvl1        ; Put the offset of this variable in ecx
-	mov edx, ylvl1Len     ; this length is a constant, so we don't need to say
+	mov ecx, ylvl1       ; Put the offset of this variable in ecx
+	mov edx, ylvl1Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -294,8 +297,8 @@ _start:
 	;student no.2's Id Number
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, idno2        ; Put the offset of this variable in ecx
-	mov edx, idno2Len     ; this length is a constant, so we don't need to say
+	mov ecx, idno2       ; Put the offset of this variable in ecx
+	mov edx, idno2Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -303,15 +306,15 @@ _start:
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
 	mov ecx, lname       ; Put the offset of this variable in ecx
-	mov edx, lnameLen     ; this length is a constant, so we don't need to say
+	mov edx, lnameLen    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
 	;student no.2's Last Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, lname2       ; Put the offset of this variable in ecx
-	mov edx, lname2Len     ; this length is a constant, so we don't need to say
+	mov ecx, lname2      ; Put the offset of this variable in ecx
+	mov edx, lname2Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -326,8 +329,8 @@ _start:
 	;student no.2's First Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, fname2       ; Put the offset of this variable in ecx
-	mov edx, fname2Len    ; this length is a constant, so we don't need to say
+	mov ecx, fname2      ; Put the offset of this variable in ecx
+	mov edx, fname2Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -342,8 +345,8 @@ _start:
 	;student no.2's Middle Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, mname2       ; Put the offset of this variable in ecx
-	mov edx, mname2Len    ; this length is a constant, so we don't need to say
+	mov ecx, mname2      ; Put the offset of this variable in ecx
+	mov edx, mname2Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -358,8 +361,8 @@ _start:
 	;student no.2's course
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, course2      ; Put the offset of this variable in ecx
-	mov edx, course2Len   ; this length is a constant, so we don't need to say
+	mov ecx, course2     ; Put the offset of this variable in ecx
+	mov edx, course2Len  ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -374,8 +377,8 @@ _start:
 	;student no.2's Year Level
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, ylvl2        ; Put the offset of this variable in ecx
-	mov edx, ylvl2Len     ; this length is a constant, so we don't need to say
+	mov ecx, ylvl2       ; Put the offset of this variable in ecx
+	mov edx, ylvl2Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -384,7 +387,7 @@ _start:
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ;/////////////////////////////////////////////////////////////////////////////////
-	                            ;Mars Benitez
+	                            ;Nino Rey Cabiltes
 	;Student No.3
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
@@ -404,8 +407,8 @@ _start:
 	;student no.3's Id Number
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, idno3        ; Put the offset of this variable in ecx
-	mov edx, idno3Len     ; this length is a constant, so we don't need to say
+	mov ecx, idno3       ; Put the offset of this variable in ecx
+	mov edx, idno3Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -413,15 +416,15 @@ _start:
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
 	mov ecx, lname       ; Put the offset of this variable in ecx
-	mov edx, lnameLen     ; this length is a constant, so we don't need to say
+	mov edx, lnameLen    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
 	;student no.3's Last Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, lname3       ; Put the offset of this variable in ecx
-	mov edx, lname3Len     ; this length is a constant, so we don't need to say
+	mov ecx, lname3      ; Put the offset of this variable in ecx
+	mov edx, lname3Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -436,8 +439,8 @@ _start:
 	;student no.3's First Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, fname3       ; Put the offset of this variable in ecx
-	mov edx, fname3Len    ; this length is a constant, so we don't need to say
+	mov ecx, fname3      ; Put the offset of this variable in ecx
+	mov edx, fname3Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -452,8 +455,8 @@ _start:
 	;student no.3's Middle Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, mname3       ; Put the offset of this variable in ecx
-	mov edx, mname3Len    ; this length is a constant, so we don't need to say
+	mov ecx, mname3      ; Put the offset of this variable in ecx
+	mov edx, mname3Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -468,8 +471,8 @@ _start:
 	;student no.1's course
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, course2      ; Put the offset of this variable in ecx
-	mov edx, course2Len   ; this length is a constant, so we don't need to say
+	mov ecx, course2     ; Put the offset of this variable in ecx
+	mov edx, course2Len  ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -484,8 +487,8 @@ _start:
 	;student no.3's Year Level
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, ylvl3        ; Put the offset of this variable in ecx
-	mov edx, ylvl3Len     ; this length is a constant, so we don't need to say
+	mov ecx, ylvl3       ; Put the offset of this variable in ecx
+	mov edx, ylvl3Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -494,7 +497,7 @@ _start:
 ;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 ;/////////////////////////////////////////////////////////////////////////////////
-	                            ;Mars Benitez
+	                            ;Emman Roy Pelago
 	;Student No.4
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
@@ -514,8 +517,8 @@ _start:
 	;student no.4's Id Number
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, idno4        ; Put the offset of this variable in ecx
-	mov edx, idno4Len     ; this length is a constant, so we don't need to say
+	mov ecx, idno4       ; Put the offset of this variable in ecx
+	mov edx, idno4Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -530,8 +533,8 @@ _start:
 	;student no.4's Last Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, lname4       ; Put the offset of this variable in ecx
-	mov edx, lname4Len     ; this length is a constant, so we don't need to say
+	mov ecx, lname4      ; Put the offset of this variable in ecx
+	mov edx, lname4Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -546,8 +549,8 @@ _start:
 	;student no.4's First Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, fname4       ; Put the offset of this variable in ecx
-	mov edx, fname4Len    ; this length is a constant, so we don't need to say
+	mov ecx, fname4      ; Put the offset of this variable in ecx
+	mov edx, fname4Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -562,8 +565,8 @@ _start:
 	;student no.4's Middle Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, mname4       ; Put the offset of this variable in ecx
-	mov edx, mname4Len    ; this length is a constant, so we don't need to say
+	mov ecx, mname4      ; Put the offset of this variable in ecx
+	mov edx, mname4Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -578,8 +581,8 @@ _start:
 	;student no.4's course
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, course4      ; Put the offset of this variable in ecx
-	mov edx, course4Len   ; this length is a constant, so we don't need to say
+	mov ecx, course4     ; Put the offset of this variable in ecx
+	mov edx, course4Len  ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -594,8 +597,8 @@ _start:
 	;student no.4's Year Level
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, ylvl4        ; Put the offset of this variable in ecx
-	mov edx, ylvl4Len     ; this length is a constant, so we don't need to say
+	mov ecx, ylvl4       ; Put the offset of this variable in ecx
+	mov edx, ylvl4Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -625,8 +628,8 @@ _start:
 	;student no.5's Id Number
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, idno5        ; Put the offset of this variable in ecx
-	mov edx, idno5Len     ; this length is a constant, so we don't need to say
+	mov ecx, idno5       ; Put the offset of this variable in ecx
+	mov edx, idno5Len    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -634,15 +637,15 @@ _start:
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
 	mov ecx, lname       ; Put the offset of this variable in ecx
-	mov edx, lnameLen     ; this length is a constant, so we don't need to say
+	mov edx, lnameLen    ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
 	;student no.5's Last Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, lname5       ; Put the offset of this variable in ecx
-	mov edx, lname5Len     ; this length is a constant, so we don't need to say
+	mov ecx, lname5      ; Put the offset of this variable in ecx
+	mov edx, lname5Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -657,8 +660,8 @@ _start:
 	;student no.5's First Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, fname5       ; Put the offset of this variable in ecx
-	mov edx, fname5Len    ; this length is a constant, so we don't need to say
+	mov ecx, fname5      ; Put the offset of this variable in ecx
+	mov edx, fname5Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -673,8 +676,8 @@ _start:
 	;student no.5's Middle Name
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, mname5       ; Put the offset of this variable in ecx
-	mov edx, mname5Len    ; this length is a constant, so we don't need to say
+	mov ecx, mname5      ; Put the offset of this variable in ecx
+	mov edx, mname5Len   ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
@@ -689,8 +692,8 @@ _start:
 	;student no.5's course
 	mov eax,4            ; The system call for write (sys_write)
 	mov ebx,1            ; File descriptor 1 - standard output
-	mov ecx, course5      ; Put the offset of this variable in ecx
-	mov edx, course5Len   ; this length is a constant, so we don't need to say
+	mov ecx, course5     ; Put the offset of this variable in ecx
+	mov edx, course5Len  ; this length is a constant, so we don't need to say
 	                     ;  mov edx, the length to get it's actual value
 	int 80h              ; Call the kernel
 	
