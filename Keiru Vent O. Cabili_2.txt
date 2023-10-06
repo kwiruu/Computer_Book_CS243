@@ -1,0 +1,734 @@
+; CS243 October 6, 2023
+; Keiru Vent O. Cabili
+; Lab exer2
+; This code prints 5 of the computer books
+
+section .data
+	header:   db 'Cebu Institute of Technology – University',10,
+	          db 'College of Computer Studies', 10, 
+	          db 'College Library', 10,
+	          db 'First Semester Academic Year 2023-2024',10,10,
+	          db 'LIST OF COMPUTER BOOKS'   ; text of the header plus a linefeed character
+	headerLen:        equ $-header                ;Length of the header string
+	
+	footer:           db 10,10,'Programmer Name: Keiru Vent O. Cabili',10,'Date: October 6, 2023'
+	footerLen:        equ $-footer
+	
+;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LABELS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+	isbn:             db 10,'ISBN Number: '
+	isbnLen:          equ $-isbn                      ;length of the isbn string
+	
+	title:            db 10,'Title: ',9
+	titleLen:         equ $-title                     ;length of the title string
+	
+  	edition:        db 10,'Edition: '
+	editionLen:       equ $-edition                   ;length of the edition string
+	
+	authorName:       db 10,'Author Name: '
+	authorNameLen:    equ $-authorName                ;length of the author string
+	
+	Publisher:        db 10,'Publisher: '
+	PublisherLen:     equ $-Publisher                 ;length of the Publisher string
+	
+	ypublished:       db 10,'Year Published: '
+	ypublishedLen:    equ $-ypublished                ;length of the ypublished string
+	
+;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<BOOK1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	bookno1:          db 10,10,'Book No.1'
+	bookno1Len:       equ $-bookno1                   ;length of the bookno1 string
+
+	isbn1:            db 9,9,'978-1-85617-119-9'
+	isbn1Len:         equ $-isbn1                     ;length of the isbn string
+	
+	title1:           db 9,9,'Computer Architecture Technology Trends'
+	title1Len:        equ $-title1                    ;length of the title string
+	
+ 	edition1:         db 9,9,'1st'
+	edition1Len:      equ $-edition1                  ;length of the edition string
+	
+	authorName1:      db 9,9,'Timothy Chou'
+	authorName1Len:   equ $-authorName1               ;length of the authorName string
+	
+	Publisher1:       db 9,9,'Elsevier Science'
+	Publisher1Len:    equ $-Publisher1                ;length of the Publisher string
+	
+	ypublished1:      db 9,'1991'
+	ypublished1Len:   equ $-ypublished1               ;length of the ypublished string
+
+
+;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<BOOK2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	bookno2:          db 10,10,10,'Book No.2'
+	bookno2Len:       equ $-bookno2                  ;length of the bookno2 string
+
+	isbn2:            db 9,9,'978-0-12-370497-9'
+	isbn2Len:         equ $-isbn2                    ;length of the isbn string
+	
+	title2:           db 9,9,'Digital Design and Computer Architecture'
+	title2Len:        equ $-title2                   ;length of the title string
+	
+  edition2:         db 9,9,'1st'
+	edition2Len:      equ $-edition2                 ;length of the edition string
+	
+	authorName2:      db 9,9,'David Money Harris'
+	authorName2Len:   equ $-authorName2              ;length of the edition string
+	
+	Publisher2:       db 9,9,'Morgan Kaufmann'
+	Publisher2Len:    equ $-Publisher2               ;length of the edition string
+	
+	ypublished2:      db 9,'2007'
+	ypublished2Len:   equ $-ypublished2              ;length of the ypublished string
+	
+	
+;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<BOOK3>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	bookno3:          db 10,10,10,'Book No.3'
+	bookno3Len:       equ $-bookno3                 ;length of the bookno3 string
+
+	isbn3:            db 9,9,'978-0-12-385003-4'
+	isbn3Len:         equ $-isbn3                   ;length of the isbn string
+	
+	title3:           db 9,9,'API Design for C++'
+	title3Len:        equ $-title3                  ;length of the title string
+	
+  edition3:         db 9,9,'1st'
+	edition3Len:      equ $-edition3                ;length of the edition string
+	
+	authorName3:      db 9,9,'Martin Reddy'
+  authorName3Len:   equ $-authorName3                   ;length of the edition string
+	
+	Publisher3:       db 9,9,'Elsevier Inc.'
+	Publisher3Len:    equ $-Publisher3              ;length of the publisher string
+	
+	ypublished3:      db 9,'2011'
+	ypublished3Len:   equ $-ypublished3             ;length of the ypublished string
+	
+	
+;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<BOOK4>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	bookno4:          db 10,10,10,'Book No.4'
+	bookno4Len:       equ $-bookno4                 ;length of the bookno4 string
+
+	isbn4:            db 9,9,'978-1-55860-900-6'
+	isbn4Len:         equ $-isbn4                   ;length of the isbn string
+	
+	title4:           db 9,9,'Java Web Services Architecture'
+	title4Len:        equ $-title4                  ;length of the title string
+	
+  edition4:         db 9,9,'1st'
+	edition4Len:      equ $-edition4                ;length of the edition string
+	
+	authorName4:      db 9,9,'James McGovern'
+	authorName4Len:   equ $-authorName4             ;length of the edition string
+	
+	Publisher4:       db 9,9,'Morgan Kaufmann'
+	Publisher4Len:    equ $-Publisher4              ;length of the publisher string
+	
+	ypublished4:      db 9,'2003'
+	ypublished4Len:   equ $-ypublished4             ;length of the ypublished string	
+	
+
+;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<BOOK5>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	
+	bookno5:          db 10,10,10,'Book No.5'
+	bookno5Len:       equ $-bookno5                ;length of the bookno5 string
+
+	isbn5:            db 9,9,'978-0-12-385017-1'
+	isbn5Len:         equ $-isbn5                  ;length of the isbn string
+	
+	title5:           db 9,9,'Architecture and Patterns for IT: Service Management, Resource Planning, and Governance'
+	title5Len:        equ $-title5                 ;length of the title string
+	
+  edition5:         db 9,9,'2nd'
+	edition5Len:      equ $-edition5               ;length of the edition string
+	
+	authorName5:      db 9,9,'Charles T. Betz'
+	authorName5Len:   equ $-authorName5            ;length of the author string
+	
+	Publisher5:       db 9,9,'Elsevier Inc. '
+	Publisher5Len:    equ $-Publisher5             ;length of the publisher string
+	
+	ypublished5:      db 9,'2011'
+	ypublished5Len:   equ $-ypublished5            ;length of the ypublished string		
+	
+section .text
+	global _start
+
+_start:
+  ;header
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, header      ; Put the offset of header in ecx
+	mov edx, headerLen   ; headerLen is a constant, so we don't need to say
+	                     ;  mov edx,[headerLen] to get it's actual value
+	int 80h              ; Call the kernel
+	
+;/////////////////////////////////////////////////////////////////////////////////
+
+	;Book No.1
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, bookno1      ; Put the offset of this variable in ecx
+	mov edx, bookno1Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+  ;ISBN Number: :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn        ; Put the offset of this variable in ecx
+	mov edx, isbnLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's ISBN Number: 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn1        ; Put the offset of this variable in ecx
+	mov edx, isbn1Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Title :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title       ; Put the offset of this variable in ecx
+	mov edx, titleLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's Title 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title1       ; Put the offset of this variable in ecx
+	mov edx, title1Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Edition:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition       ; Put the offset of this variable in ecx
+	mov edx, editionLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's Edition
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition1       ; Put the offset of this variable in ecx
+	mov edx, edition1Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Author Name:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName       ; Put the offset of this variable in ecx
+	mov edx, authorNameLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's Author Name
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName1       ; Put the offset of this variable in ecx
+	mov edx, authorName1Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Publisher:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher      ; Put the offset of this variable in ecx
+	mov edx, PublisherLen   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's Publisher
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher1      ; Put the offset of this variable in ecx
+	mov edx, Publisher1Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Year Published:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished        ; Put the offset of this variable in ecx
+	mov edx, ypublishedLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's Year Published
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished1        ; Put the offset of this variable in ecx
+	mov edx, ypublished1Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	
+	
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+;/////////////////////////////////////////////////////////////////////////////////
+
+	;Book No.2  
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, bookno2      ; Put the offset of this variable in ecx
+	mov edx, bookno2Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+  ;ISBN Number: :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn        ; Put the offset of this variable in ecx
+	mov edx, isbnLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.2's ISBN Number: 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn2        ; Put the offset of this variable in ecx
+	mov edx, isbn2Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Title :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title       ; Put the offset of this variable in ecx
+	mov edx, titleLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.2's Title 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title2       ; Put the offset of this variable in ecx
+	mov edx, title2Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Edition:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition       ; Put the offset of this variable in ecx
+	mov edx, editionLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.2's Edition
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition2       ; Put the offset of this variable in ecx
+	mov edx, edition2Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Author Name:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName       ; Put the offset of this variable in ecx
+	mov edx, authorNameLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.2's Author Name
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName2       ; Put the offset of this variable in ecx
+	mov edx, authorName2Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Publisher:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher      ; Put the offset of this variable in ecx
+	mov edx, PublisherLen   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.2's Publisher
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher2      ; Put the offset of this variable in ecx
+	mov edx, Publisher2Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Year Published:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished        ; Put the offset of this variable in ecx
+	mov edx, ypublishedLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.2's Year Published
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished2        ; Put the offset of this variable in ecx
+	mov edx, ypublished2Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	
+	
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+;/////////////////////////////////////////////////////////////////////////////////
+
+	;Book No.3
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, bookno3      ; Put the offset of this variable in ecx
+	mov edx, bookno3Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+  ;ISBN Number: :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn        ; Put the offset of this variable in ecx
+	mov edx, isbnLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.3's ISBN Number: 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn3        ; Put the offset of this variable in ecx
+	mov edx, isbn3Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Title :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title       ; Put the offset of this variable in ecx
+	mov edx, titleLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.3's Title 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title3       ; Put the offset of this variable in ecx
+	mov edx, title3Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Edition:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition       ; Put the offset of this variable in ecx
+	mov edx, editionLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.3's Edition
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition3       ; Put the offset of this variable in ecx
+	mov edx, edition3Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Author Name:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName       ; Put the offset of this variable in ecx
+	mov edx, authorNameLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.3's Author Name
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName3       ; Put the offset of this variable in ecx
+	mov edx, authorName3Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Publisher:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher      ; Put the offset of this variable in ecx
+	mov edx, PublisherLen   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.1's Publisher
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher2      ; Put the offset of this variable in ecx
+	mov edx, Publisher2Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Year Published:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished        ; Put the offset of this variable in ecx
+	mov edx, ypublishedLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.3's Year Published
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished3        ; Put the offset of this variable in ecx
+	mov edx, ypublished3Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	
+	
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+;/////////////////////////////////////////////////////////////////////////////////
+	   
+	;Book No.4
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, bookno4      ; Put the offset of this variable in ecx
+	mov edx, bookno4Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+  ;ISBN Number: :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn        ; Put the offset of this variable in ecx
+	mov edx, isbnLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.4's ISBN Number: 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn4        ; Put the offset of this variable in ecx
+	mov edx, isbn4Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Title :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title       ; Put the offset of this variable in ecx
+	mov edx, titleLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.4's Title 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title4       ; Put the offset of this variable in ecx
+	mov edx, title4Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Edition:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition       ; Put the offset of this variable in ecx
+	mov edx, editionLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.4's Edition
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition4       ; Put the offset of this variable in ecx
+	mov edx, edition4Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Author Name:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName       ; Put the offset of this variable in ecx
+	mov edx, authorNameLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.4's Author Name
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName4       ; Put the offset of this variable in ecx
+	mov edx, authorName4Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Publisher:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher      ; Put the offset of this variable in ecx
+	mov edx, PublisherLen   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.4's Publisher
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher4      ; Put the offset of this variable in ecx
+	mov edx, Publisher4Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Year Published:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished        ; Put the offset of this variable in ecx
+	mov edx, ypublishedLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.4's Year Published
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished4        ; Put the offset of this variable in ecx
+	mov edx, ypublished4Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	
+	
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+
+;/////////////////////////////////////////////////////////////////////////////////
+
+	;Book No.5
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, bookno5      ; Put the offset of this variable in ecx
+	mov edx, bookno5Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+  ;ISBN Number: :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn        ; Put the offset of this variable in ecx
+	mov edx, isbnLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.5's ISBN Number: 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, isbn5        ; Put the offset of this variable in ecx
+	mov edx, isbn5Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Title :
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title       ; Put the offset of this variable in ecx
+	mov edx, titleLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.5's Title 
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, title5       ; Put the offset of this variable in ecx
+	mov edx, title5Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Edition:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition       ; Put the offset of this variable in ecx
+	mov edx, editionLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.5's Edition
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, edition5       ; Put the offset of this variable in ecx
+	mov edx, edition5Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Author Name:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName       ; Put the offset of this variable in ecx
+	mov edx, authorNameLen    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.5's Author Name
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, authorName5       ; Put the offset of this variable in ecx
+	mov edx, authorName5Len    ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Publisher:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher      ; Put the offset of this variable in ecx
+	mov edx, PublisherLen   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.5's Publisher
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, Publisher5      ; Put the offset of this variable in ecx
+	mov edx, Publisher5Len   ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Year Published:
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished        ; Put the offset of this variable in ecx
+	mov edx, ypublishedLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	;Book No.5's Year Published
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, ypublished5        ; Put the offset of this variable in ecx
+	mov edx, ypublished5Len     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	
+	
+	
+;\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+	
+	;print footer
+	mov eax,4            ; The system call for write (sys_write)
+	mov ebx,1            ; File descriptor 1 - standard output
+	mov ecx, footer        ; Put the offset of this variable in ecx
+	mov edx, footerLen     ; this length is a constant, so we don't need to say
+	                     ;  mov edx, the length to get it's actual value
+	int 80h              ; Call the kernel
+	                        
+	           
+	                     
+	                     
+	;exit                     
+	mov eax,1            ; The system call for exit (sys_exit)
+	mov ebx,0            ; Exit with return "code" of 0 (no error)
+	int 80h;
