@@ -1,0 +1,86 @@
+global _start
+
+section .data
+    ;strings
+  directionLine: db " ", 10, "Input a number: "
+  directionLineLen: equ $-directionLine
+  greaterLine: db " ", 10, "The number is equal to or greater than than 10"
+  greaterLineLen: equ $-greaterLine
+  lesserLine: db " ", 10, "The number is less that 10."
+  lesserLineLen: equ $-lesserLine
+
+section .text
+_start:
+    ;prints the input a number line
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, directionLine
+  mov edx, directionLineLen
+  int 80h
+  ;stores it to input
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, input
+  mov edx, 16
+  int 80h
+  
+  xor eax, eax
+  lea esi, [input]
+  call to_integer
+
+  cmp eax, 10
+
+  jge greater
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, lesserLine
+  mov edx, lesserLineLen
+  int 80h
+  jmp endf
+  
+  greater:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, greaterLine
+  mov edx, greaterLineLen
+  int 80h
+  
+  endf:
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+  
+;functiont that converts the value to integer
+to_integer:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp to_integer
+  
+;functiont that converts the value to string
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret
+  
+  ;values
+section .bss
+  input resd 16
+  num resd 2
+  first resd 2
+  buffer resb 16

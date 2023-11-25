@@ -1,0 +1,182 @@
+section .data
+  header_line: db 10, "Input 2 numbers"  ; Header line for user input
+  header_line_len: equ $-header_line
+  
+  choice_line: db "", 10, "Again? Y/N: "             ; Line to ask if the user wants to enter numbers again
+  choice_line_len: equ $-choice_line
+
+  thank_you_msg: db "Thank you."                      ; Message displayed at the end
+  thank_you_msg_len: equ $-thank_you_msg
+
+  input1_prompt: db " ", 10, "1st number: "          ; Prompt for the first number
+  input1_prompt_len: equ $-input1_prompt
+  input2_prompt: db "2nd number: "                    ; Prompt for the second number
+  input2_prompt_len: equ $-input2_prompt
+
+  first_line: db " ", 10, "The smallest is: "        ; Line to display the smallest number
+  first_line_len: equ $-first_line
+  second_line: db " ", 10, "The largest is: "         ; Line to display the largest number
+  second_line_len: equ $-second_line
+
+
+section .bss
+  user_choice: resb 2                  ; Buffer to store the user's choice (Y/N)
+  user_input1: resd 16                 ; Buffer to store the first numeric input
+  user_input2: resd 16                 ; Buffer to store the second numeric input
+  num1: resd 2                         ; Variable to store the first number
+  num2: resd 2                         ; Variable to store the second number
+  smallest: resd 2                     ; Variable to store the smallest number
+  largest: resd 2                      ; Variable to store the largest number
+  buffer: resb 16                      ; Buffer for converting numbers to strings
+
+section .text
+_start:
+
+  again:
+  ; Display header line
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, header_line
+  mov edx, header_line_len
+  int 80h
+
+  ; Prompt for the first number
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, input1_prompt
+  mov edx, input1_prompt_len
+  int 80h
+  ; Read the first number
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, user_input1
+  mov edx, 16
+  int 80h
+
+  ; Prompt for the second number
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, input2_prompt
+  mov edx, input2_prompt_len
+  int 80h
+  ; Read the second number
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, user_input2
+  mov edx, 16
+  int 80h
+
+  ; Convert the first input to an integer
+  xor eax, eax
+  lea esi, [user_input1]
+  call convert_to_int
+  mov dword [num1], eax
+
+  ; Convert the second input to an integer
+  xor eax, eax
+  lea esi, [user_input2]
+  call convert_to_int
+  mov dword [num2], eax
+
+  ; Compare the numbers to find the smallest and largest
+  mov eax, dword [num1]
+  mov ebx, dword [num2]
+
+  cmp eax, ebx
+  jle point1
+  mov edx, eax
+  mov eax, ebx
+  mov ebx, edx
+  point1:
+
+  ; Store the smallest and largest numbers
+  mov dword [smallest], eax
+  mov dword [largest], ebx
+
+  ; Display the line for the smallest number
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, first_line
+  mov edx, first_line_len
+  int 80h
+  ; Display the smallest number
+  mov eax, dword [smallest]
+  lea ecx, [buffer + 15]
+  call convert_to_str
+  inc ecx
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  ; Display the line for the largest number
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, second_line
+  mov edx, second_line_len
+  int 80h
+  ; Display the largest number
+  mov eax, dword [largest]
+  lea ecx, [buffer + 15]
+  call convert_to_str
+  inc ecx
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  ; Display the choice prompt
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, choice_line
+  mov edx, choice_line_len
+  int 80h
+  ; Read the user's choice
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, user_choice
+  mov edx, 2
+  int 80h
+
+  ; Check if the user wants to enter another set of numbers
+  lea esi, [user_choice]
+  movzx edx, byte [esi]
+  cmp edx, 'Y'
+  je again
+
+  ; Display the thank you message
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, thank_you_msg
+  mov edx, thank_you_msg_len
+  int 80h
+  ; Exit the program
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+
+convert_to_int:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp convert_to_int
+
+convert_to_str:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz convert_to_str
+  jmp return
+
+return:
+  ret

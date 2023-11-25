@@ -1,0 +1,182 @@
+global _start
+
+section .data
+
+  headerLine: db " ", 10, "Input 3 numbers"
+  headerLineLen: equ $-headerLine
+
+  inputFirstLine: db " ", 10, "1st number: "
+  inputFirstLineLen: equ $-inputFirstLine
+  inputSecondLine: db " ", 10, "2nd number: "
+  inputSecondLineLen: equ $-inputSecondLine
+  inputLastLine: db " ", 10, "3rd number: "
+  inputLastLineLen: equ $-inputLastLine
+
+  firstLine: db " ", 10, "The smallest is: "
+  firstLineLen: equ $-firstLine
+  secondLine: db " ", 10, "The second is: "
+  secondLineLen: equ $-secondLine
+  thirdLine: db " ", 10, "The greatest is: "
+  thirdLineLen: equ $-thirdLine
+
+section .text
+_start:
+
+    ;prints the input 3 numbers
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, headerLine
+  mov edx, headerLineLen
+  int 80h
+
+    ;prints the 1st number input
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, inputFirstLine
+  mov edx, inputFirstLineLen
+  int 80h
+  
+    ;stores the 1st number input to inputfirst
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, inputFirst
+  mov edx, 16
+  int 80h
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, inputSecondLine
+  mov edx, inputSecondLineLen
+  int 80h
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, inputSecond
+  mov edx, 16
+  int 80h
+  
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, inputLastLine
+  mov edx, inputLastLineLen
+  int 80h
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, inputLast
+  mov edx, 16
+  int 80h
+
+  xor eax, eax
+  lea esi, [inputFirst]
+  call to_integer
+  mov dword [number1], eax
+
+  xor eax, eax
+  lea esi, [inputSecond]
+  call to_integer
+  mov dword [number2], eax
+
+  xor eax, eax
+  lea esi, [inputLast]
+  call to_integer
+  mov dword [number3], eax
+
+  mov eax, dword [number1]
+  mov ebx, dword [number2]
+  mov ecx, dword [number3]
+
+  cmp eax, ebx
+  jle point1
+  mov edx, eax
+  mov eax, ebx
+  mov ebx, edx
+  point1:
+  cmp eax, ecx
+  jle point2
+  mov edx, eax
+  mov eax, ecx
+  mov ecx, edx
+  point2:
+  cmp ebx, ecx
+  jle point3
+  mov edx, ebx
+  mov ebx, ecx
+  mov ecx, edx
+  point3:
+
+  mov dword [first], eax
+  mov dword [second], ebx
+  mov dword [third], ecx
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, firstLine
+  mov edx, firstLineLen
+  int 80h
+  mov eax, dword [first]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, thirdLine
+  mov edx, thirdLineLen
+  int 80h
+  mov eax, dword [third]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+  
+;exit
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+  
+;function to convert the value to integer
+to_integer:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp to_integer
+  
+;function to convert the value to string
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret
+  
+  
+;values of buffers
+section .bss
+  inputFirst resd 16
+  inputSecond resd 16
+  inputLast resd 16
+  number1 resd 2
+  number2 resd 2
+  number3 resd 2
+  first resd 2
+  second resd 2
+  third resd 2
+  buffer resb 16

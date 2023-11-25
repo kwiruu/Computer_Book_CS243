@@ -1,0 +1,146 @@
+
+
+global _start
+
+section .data
+    
+  directionsLine: db " ", 10, "Input 2 numbers"
+  directionsLineLen: equ $-directionsLine
+
+  inputted1Line: db " ", 10, "1st number: "
+  inputted1LineLen: equ $-inputted1Line
+  inputted2Line: db " ", 10, "2nd number: "
+  inputted2LineLen: equ $-inputted2Line
+
+  smallestLine: db " ", 10, "The smallest is: "
+  smallestLineLen: equ $-smallestLine
+  largestLine: db " ", 10, "The largest is: "
+  largestLineLen: equ $-largestLine
+
+
+section .text
+_start:
+    ;prints the input 2 numbers:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, directionsLine
+  mov edx, directionsLineLen
+  int 80h
+
+    ;prints the 1st number input
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, inputted1Line
+  mov edx, inputted1LineLen
+  int 80h
+
+  ;stores it to inputted1
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, inputted1
+  mov edx, 16
+  int 80h
+
+    ;prints the 2nd number input
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, inputted2Line
+  mov edx, inputted2LineLen
+  int 80h
+
+  ;stores it to inpuuted2
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, inputted2
+  mov edx, 16
+  int 80h
+  
+  
+  xor eax, eax
+  lea esi, [inputted1]
+  call to_integer
+  mov dword [num1], eax
+
+
+  xor eax, eax
+  lea esi, [inputted2]
+  call to_integer
+  mov dword [num2], eax
+
+  mov eax, dword [num1]
+  mov ebx, dword [num2]
+
+  cmp eax, ebx
+  jle point1
+  mov edx, eax
+  mov eax, ebx
+  mov ebx, edx
+  point1:
+
+  mov dword [smallest], eax
+  mov dword [largest], ebx
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, smallestLine
+  mov edx, smallestLineLen
+  int 80h
+  mov eax, dword [smallest]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, largestLine
+  mov edx, largestLineLen
+  int 80h
+  mov eax, dword [largest]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+    ;function to conver the value to integer
+to_integer:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp to_integer
+    ;function to convert the value tp String
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret
+  ;values o f the buffers and such
+section .bss
+  inputted1 resd 16
+  inputted2 resd 16
+  num1 resd 2
+  num2 resd 2
+  smallest resd 2
+  largest resd 2
+  buffer resb 16

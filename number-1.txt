@@ -1,0 +1,78 @@
+global _start
+
+section .data
+  number1: dd 10
+  number2: dd 26
+
+  lowestLine: db " ", 10, "The smallest is: "
+  lowestLineLen: equ $-lowestLine
+
+  greatestLine: db " ", 10, "The greatest is: "
+  greatestLineLen: equ $-greatestLine
+
+section .bss
+  greatest resd 2
+  lowest resd 2
+  buffers1 resb 16
+  buffers2 resb 16
+
+section .text
+_start:
+
+  mov eax, dword [number1]
+  mov ebx, dword [number2]
+  cmp eax, ebx
+  jl endf 
+  mov eax, dword [number2]
+  mov ebx, dword [number1]
+  
+  ;function
+  endf:
+
+  mov dword [lowest], eax
+  mov dword [greatest], ebx
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, lowestLine
+  mov edx, lowestLineLen
+  int 80h
+  mov eax, dword [lowest]
+  lea ecx, [buffers1 + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, greatestLine
+  mov edx, greatestLineLen
+  int 80h
+  mov eax, dword [greatest]
+  lea ecx, [buffers2 + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+;exit
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+;function that will convert the value to string
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret

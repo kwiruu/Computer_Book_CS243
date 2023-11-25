@@ -1,0 +1,62 @@
+global _start
+
+section .data
+  loopy: dd 1
+
+section .text
+_start:
+
+;loop
+  loop:
+    mov eax, dword [loopy]
+    cmp eax, 10
+    jg endLoop
+
+    mov ebx, eax
+    inc ebx
+    mov dword [loopy], ebx
+
+    lea ecx, [buffer1 + 15]
+    call to_string
+    mov eax, 4
+    mov ebx, 1
+    mov edx, 3
+    int 80h
+    jmp loop
+  
+;function to end loop
+  endLoop:
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+
+;function to convert value to integer
+to_integer:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp to_integer
+
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret
+
+
+section .bss
+  buffer1: resd 16

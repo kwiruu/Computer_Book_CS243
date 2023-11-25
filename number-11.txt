@@ -1,0 +1,128 @@
+section .data
+  current_num: dd 1                  ; Variable to store the current number
+  hash_symbol: db "#"                 ; Symbol to be printed
+  hash_symbol_len: equ $-hash_symbol  ; Length of the hash symbol
+  input_prompt: db " ", 10, "Enter a number: "  ; Prompt for user input
+  input_prompt_len: equ $-input_prompt           ; Length of input prompt
+  choice_prompt: db "", 10, "Again? Y/N: "       ; Prompt to ask if the user wants to enter another number
+  choice_prompt_len: equ $-choice_prompt        ; Length of the choice prompt
+  thank_you_msg: db "Thank you."                 ; Message to be displayed at the end
+  thank_you_msg_len: equ $-thank_you_msg         ; Length of the thank you message
+
+section .bss
+  num_buffer: resd 16                  ; Buffer to store the numeric value
+  user_input: resb 16                  ; Buffer to store user input
+  end_number: resd 2                   ; Buffer to store the end number
+  user_choice: resb 2                  ; Buffer to store the user's choice (Y/N)
+
+section .text
+_start:
+
+  again:
+  mov eax, 1
+  mov dword [current_num], eax
+
+  ; Display input prompt
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, input_prompt
+  mov edx, input_prompt_len
+  int 80h
+
+  ; Read user input
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, user_input
+  mov edx, 16
+  int 80h
+  
+  ; Convert user input to integer
+  xor eax, eax
+  lea esi, [user_input]
+  call to_integer
+  mov dword [end_number], eax
+
+  ; Loop to print hash symbols
+  loop_symbols:
+    ; Compare current number with end number
+    mov eax, dword [current_num]
+    cmp eax, dword [end_number]
+    jg end_loop
+
+    ; Increment current number
+    mov ebx, eax
+    inc ebx
+    mov dword [current_num], ebx
+
+    ; Display hash symbol
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, hash_symbol
+    mov edx, hash_symbol_len
+    int 80h
+
+    ; Jump to the next iteration of the loop
+    jmp loop_symbols
+  
+  end_loop:
+
+  ; Display choice prompt
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, choice_prompt
+  mov edx, choice_prompt_len
+  int 80h
+
+  ; Read user choice
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, user_choice
+  mov edx, 2
+  int 80h
+
+  ; Check if the user wants to enter another number
+  lea esi, [user_choice]
+  movzx edx, byte [esi]
+  cmp edx, 'Y'
+  je again
+  
+  ; Display thank you message
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, thank_you_msg
+  mov edx, thank_you_msg_len
+  int 80h
+
+  ; Exit the program
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+
+; Function to convert ASCII string to integer
+to_integer:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp to_integer
+
+; Function to convert integer to ASCII string
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+; Return from the function
+return:
+  ret

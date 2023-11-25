@@ -1,0 +1,116 @@
+global _start
+
+section .data
+  _1stLine: db " ", 10, "The smallest is: ",9
+  _1stLineLen: equ $-_1stLine
+
+  _2ndLine: db " ", 10, "The middle is: ",9,9
+  _2ndLineLen: equ $-_2ndLine
+
+  _3rdLine: db " ", 10, "The greatest is: ",9
+  _3rdLineLen: equ $-_3rdLine
+  
+  number1: dd 10
+  number2: dd 26
+  number3: dd 55
+
+section .bss
+  buffer resb 16
+  _1st resd 2
+  _2nd resd 2
+  _3rd resd 2
+
+
+section .text
+_start:
+    ;move the values to designated registers
+  mov eax, dword [number1]
+  mov ebx, dword [number2]
+  mov ecx, dword [number3]
+
+  cmp eax, ebx
+  jle point1
+  mov edx, eax
+  mov eax, ebx
+  mov ebx, edx
+  
+  point1:
+  cmp eax, ecx
+  jle point2
+  mov edx, eax
+  mov eax, ecx
+  mov ecx, edx
+  
+  point2:
+  cmp ebx, ecx
+  jle point3
+  mov edx, ebx
+  mov ebx, ecx
+  mov ecx, edx
+  
+  point3:
+
+  mov dword [_1st], eax
+  mov dword [_2nd], ebx
+  mov dword [_3rd], ecx
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, _1stLine
+  mov edx, _1stLineLen
+  int 80h
+  
+  mov eax, dword [_1st]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, _2ndLine
+  mov edx, _2ndLineLen
+  int 80h
+  mov eax, dword [_2nd]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, _3rdLine
+  mov edx, _3rdLineLen
+  int 80h
+  mov eax, dword [_3rd]
+  lea ecx, [buffer + 15]
+  call to_string
+  mov eax, 4
+  mov ebx, 1
+  mov edx, 16
+  int 80h
+
+ ;exit
+  mov eax, 1
+    mov ebx, 0
+    int 80h
+
+;function that will convert the comp to string
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret
