@@ -1,0 +1,1007 @@
+; CS243 October 6, 2023
+; Keiru Vent O. Cabili
+; Lab exer2
+; This code requires you to input 6 inputs 5 times in order to print the 
+; desired output
+
+section .data ;Data segment
+
+;Header
+    ttl1 db "Cebu Institute of Technology – University", 10
+    ttllen1 equ $ - ttl1
+    ttl2 db "College of Computer Studies", 10
+    ttllen2 equ $ - ttl2
+    ttl3 db "Canteen Service", 10
+    ttllen3 equ $ - ttl3
+    ttl4 db "First Semester Academic Year 2023-2024", 10
+    ttllen4 equ $ - ttl4
+    
+    footer:           db 10,10,'Programmer Name: Keiru Vent O. Cabili',10,'Date: October 6, 2023',10,10,10
+	footerLen:        equ $-footer
+    
+    ttl5 db 10, "ENTER DATA", 10
+    ttllen5 equ $ - ttl5
+    
+
+ id db 'Product ID No: ',9,9        ;Ask the user to enter a number
+ idlen equ $ - id               ;The length of the message
+ name db 'Product Name: ',9,9       ;Ask the user to enter a number
+ namelen equ $ - name           ;The length of the message
+ manu db 'Manufacturer: ',9,9       ;Ask the user to enter a number
+ manulen equ $ - manu           ;The length of the message
+ desc db 'Description: ',9,9       ;Ask the user to enter a number
+ desclen equ $ - desc           ;The length of the message
+ price db 'Unit Price: ',9,9        ;Ask the user to enter a number
+ pricelen equ $ - price         ;The length of the message
+ expiry db 'Expiry Date: ',9,9      ;Ask the user to enter a number
+ expirylen equ $ - expiry       ;The length of the message
+ 
+ prod1 db 10, 'Product No. 1 ', 10 
+ prodlen1 equ $ - prod1 
+ prod2 db 10, 'Product No. 2 ', 10  
+ prodlen2 equ $ - prod2
+ prod3 db 10, 'Product No. 3 ', 10  
+ prodlen3 equ $ - prod3 
+ prod4 db 10, 'Product No. 4 ', 10  
+ prodlen4 equ $ - prod4 
+ prod5 db 10, 'Product No. 5 ', 10  
+ prodlen5 equ $ - prod5
+ 
+ sum db 10, 10, 10, 'SUMMARY OF GROCERY PRODUCTS', 10  
+ sumlen equ $ - sum
+ 
+ 
+section .bss                        ;Uninitialized data
+
+    id1 resb 5
+    name1 resb 5
+    manu1 resb 5
+    desc1 resb 5
+    price1 resb 5
+    expiry1 resb 5
+    
+    id2 resb 5
+    name2 resb 5
+    manu2 resb 5
+    desc2 resb 5
+    price2 resb 5
+    expiry2 resb 5
+    
+    id3 resb 5
+    name3 resb 5
+    manu3 resb 5
+    desc3 resb 5
+    price3 resb 5
+    expiry3 resb 5
+    
+    id4 resb 5
+    name4 resb 5
+    manu4 resb 5
+    desc4 resb 5
+    price4 resb 5
+    expiry4 resb 5
+    
+    id5 resb 5
+    name5 resb 5
+    manu5 resb 5
+    desc5 resb 5
+    price5 resb 5
+    expiry5 resb 5
+
+
+section .text ;Code Segment
+global _start
+
+    _start: ;User prompt
+    
+    ;title
+    mov eax,4            
+	mov ebx,1            
+	mov ecx,ttl1       
+	mov edx,ttllen1
+    int 0x80
+    
+    mov eax,4            
+	mov ebx,1            
+	mov ecx,ttl2      
+	mov edx,ttllen2
+    int 0x80
+    
+    mov eax,4            
+	mov ebx,1            
+	mov ecx,ttl3       
+	mov edx,ttllen3
+    int 0x80
+    
+    mov eax,4            
+	mov ebx,1            
+	mov ecx,ttl4       
+	mov edx,ttllen4
+    int 0x80
+    
+    mov eax,4            
+	mov ebx,1            
+	mov ecx,ttl5       
+	mov edx,ttllen5
+    int 0x80    
+    
+    
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod1
+     mov edx, prodlen1
+     int 80h
+     
+     ;ID1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, id1
+     mov edx, 5 
+     int 80h
+     
+     ;NAME1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, name1
+     mov edx, 5 
+     int 80h
+     
+     ;MANU1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, manu1
+     mov edx, 5 
+     int 80h
+     
+     ;DESC1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, desc1
+     mov edx, 5 
+     int 80h
+     
+     ;PRICE1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, price1
+     mov edx, 5 
+     int 80h
+     
+     ;EXPIRY1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, expiry1
+     mov edx, 5 
+     int 80h
+     
+     ;;;Product2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod2
+     mov edx, prodlen2
+     int 80h
+     
+     ;ID1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, id2
+     mov edx, 5 
+     int 80h
+     
+     ;NAME1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, name2
+     mov edx, 5 
+     int 80h
+     
+     ;MANU1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, manu2
+     mov edx, 5 
+     int 80h
+     
+     ;DESC1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, desc2
+     mov edx, 5 
+     int 80h
+     
+     ;PRICE1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, price2
+     mov edx, 5 
+     int 80h
+     
+     ;EXPIRY1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, expiry2
+     mov edx, 5 
+     int 80h
+     
+     ;;;Product3;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod3
+     mov edx, prodlen3
+     int 80h
+     
+     ;ID1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, id3
+     mov edx, 5 
+     int 80h
+     
+     ;NAME1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, name3
+     mov edx, 5 
+     int 80h
+     
+     ;MANU1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, manu3
+     mov edx, 5 
+     int 80h
+     
+     ;DESC1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, desc3
+     mov edx, 5 
+     int 80h
+     
+     ;PRICE1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, price3
+     mov edx, 5 
+     int 80h
+     
+     ;EXPIRY1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, expiry3
+     mov edx, 5 
+     int 80h
+     
+     ;;;Product4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod4
+     mov edx, prodlen4
+     int 80h
+     
+     ;ID1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, id4
+     mov edx, 5 
+     int 80h
+     
+     ;NAME1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, name4
+     mov edx, 5 
+     int 80h
+     
+     ;MANU1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, manu4
+     mov edx, 5 
+     int 80h
+     
+     ;DESC1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, desc4
+     mov edx, 5 
+     int 80h
+     
+     ;PRICE1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, price4
+     mov edx, 5 
+     int 80h
+     
+     ;EXPIRY1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, expiry4
+     mov edx, 5 
+     int 80h
+     
+     ;;;Product4;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+        
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod5
+     mov edx, prodlen5
+     int 80h
+     
+     ;ID1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, id5
+     mov edx, 5 
+     int 80h
+     
+     ;NAME1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, name5
+     mov edx, 5 
+     int 80h
+     
+     ;MANU1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, manu5
+     mov edx, 5 
+     int 80h
+     
+     ;DESC1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, desc5
+     mov edx, 5 
+     int 80h
+     
+     ;PRICE1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, price5
+     mov edx, 5 
+     int 80h
+     
+     ;EXPIRY1
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 3
+     mov ebx, 2
+     mov ecx, expiry5
+     mov edx, 5 
+     int 80h
+     
+     
+     ;OUTPUT;;
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, sum
+     mov edx, sumlen
+     int 80h
+     
+    ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PRODUCT1>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod1
+     mov edx, prodlen1
+     int 80h
+     
+     ;print id
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id1
+     mov edx, 5
+     int 80h
+     
+     ;print name
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name1
+     mov edx, 5
+     int 80h
+     
+     ;print Manu
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu1
+     mov edx, 5
+     int 80h
+     
+     ;print desc
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc1
+     mov edx, 5
+     int 80h
+     
+     ;print price
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price1
+     mov edx, 5
+     int 80h
+     
+     ;print expiry
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry1
+     mov edx, 5
+     int 80h
+     
+    ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PRODUCT2>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod2
+     mov edx, prodlen2
+     int 80h
+     
+     ;print id
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id2
+     mov edx, 5
+     int 80h
+     
+     ;print name
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name2
+     mov edx, 5
+     int 80h
+     
+     ;print Manu
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu2
+     mov edx, 5
+     int 80h
+     
+     ;print desc
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc2
+     mov edx, 5
+     int 80h
+     
+     ;print price
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price2
+     mov edx, 5
+     int 80h
+     
+     ;print expiry
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry2
+     mov edx, 5
+     int 80h
+     
+    ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PRODUCT3>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod3
+     mov edx, prodlen3
+     int 80h
+     
+     ;print id
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id3
+     mov edx, 5
+     int 80h
+     
+     ;print name
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name3
+     mov edx, 5
+     int 80h
+     
+     ;print Manu
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu3
+     mov edx, 5
+     int 80h
+     
+     ;print desc
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc3
+     mov edx, 5
+     int 80h
+     
+     ;print price
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price3
+     mov edx, 5
+     int 80h
+     
+     ;print expiry
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry3
+     mov edx, 5
+     int 80h
+     
+    ;<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PRODUCT4>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     
+    mov eax, 4
+     mov ebx, 1
+     mov ecx, prod4
+     mov edx, prodlen4
+     int 80h
+     
+     ;print id
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id4
+     mov edx, 5
+     int 80h
+     
+     ;print name
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name4
+     mov edx, 5
+     int 80h
+     
+     ;print Manu
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu4
+     mov edx, 5
+     int 80h
+     
+     ;print desc
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc4
+     mov edx, 5
+     int 80h
+     
+     ;print price
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price4
+     mov edx, 5
+     int 80h
+     
+     ;print expiry
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry4
+     mov edx, 5
+     int 80h
+     
+    ;<<<<<<<<<<<<<<<<<<<<<<PRODUCT5>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, prod5
+     mov edx, prodlen5
+     int 80h
+     
+     ;print id
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id
+     mov edx, idlen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, id5
+     mov edx, 5
+     int 80h
+     
+     ;print name
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name
+     mov edx, namelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, name5
+     mov edx, 5
+     int 80h
+     
+     ;print Manu
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu
+     mov edx, manulen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, manu5
+     mov edx, 5
+     int 80h
+     
+     ;print desc
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc
+     mov edx, desclen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, desc5
+     mov edx, 5
+     int 80h
+     
+     ;print price
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price
+     mov edx, pricelen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, price5
+     mov edx, 5
+     int 80h
+     
+     ;print expiry
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry
+     mov edx, expirylen
+     int 80h
+     
+     mov eax, 4
+     mov ebx, 1
+     mov ecx, expiry5
+     mov edx, 5
+     int 80h
+     
+     ;print footer
+	mov eax,4           
+	mov ebx,1           
+	mov ecx, footer    
+	mov edx, footerLen
+	                     
+	int 80h           
+     
+     ; Exit code
+     mov eax, 1
+     mov ebx, 0
+     int 80h

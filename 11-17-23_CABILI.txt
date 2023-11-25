@@ -1,0 +1,454 @@
+;PROGRAMMER : Keiru Vent O. Cabili
+;DATE : November 19, 2023
+;HANDS ON - NUMBER 1 & 2
+
+;//////////////////////////////// NUMBER 1 /////////////////////////////////// 
+section .data
+
+ header db "Enter a number between 1 and 10: "
+ headerLen equ $-header
+ 
+ merry_na_pasko db "",10,"MERRY CHRISTMAS!"
+ merry_na_paskoLen equ $-merry_na_pasko
+ 
+ yiz_or_nah db "Again? Y/N: "
+ yiz_or_nahLen equ $-yiz_or_nah
+ 
+  yes_or_no: db "", 10, "Again? Y/N: "
+  yes_or_noLen: equ $-yes_or_no
+  
+  entry_not_valid_ db "INVALID ENTRY!"
+  entry_not_valid_Len equ $-entry_not_valid_
+ 
+ hash db '#'
+ newline db 0xa
+ curr: dd 1
+ new: dd 1
+ counter: dd 1
+
+section .text
+    global _start
+
+_start:
+start: 
+
+mov eax, 1
+mov dword [curr], eax
+mov dword [counter], eax
+  
+mov eax,4
+mov ebx,1
+mov ecx,header
+mov edx,headerLen
+int 80h
+
+mov eax,3
+mov ebx,0
+mov ecx,choice
+mov edx,4
+int 80h
+
+  xor eax, eax
+  lea esi, [choice]
+  call convert_to_int
+  mov dword [num1], eax
+  
+  mov eax,dword [num1]
+  cmp eax,10
+  jg _invalid
+
+ loop:
+ 
+   mov dword [new],1
+   mov eax,dword [counter]
+   inc eax
+   mov dword [counter],eax
+   
+    mov eax, dword [curr]
+    mov ebx, dword [num1]
+    cmp eax, ebx
+    jg endLoop
+
+    mov ebx, eax
+    inc ebx
+    mov dword [curr], ebx
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, newline
+    mov edx, 1
+    int 80h
+    
+loopagain:
+    
+    mov eax, dword [new]
+    mov ebx, dword [counter]
+    cmp eax, ebx
+jge loop
+    
+    mov ebx, eax
+    inc ebx
+    mov dword [new], ebx
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, hash
+    mov edx, 1
+    int 80h
+    
+    jmp loopagain
+    
+endLoop:
+
+ mov eax,1
+ mov dword [new],eax
+ mov eax,1
+ mov dword [counter],eax
+ inc eax
+ mov dword [counter],eax
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, yes_or_no
+  mov edx, yes_or_noLen
+  int 80h
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, choicez
+  mov edx, 2
+  int 80h
+
+  lea esi, [choicez]
+  movzx edx, byte [esi]
+  cmp edx, 0x59
+  je start
+  jmp print_merry
+
+
+last: 
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+ 
+print_merry:
+
+mov eax,4
+mov ebx,1
+mov ecx,merry_na_pasko
+mov edx,merry_na_paskoLen
+int 80h
+jmp last
+
+convert_to_int:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp convert_to_int
+
+_invalid:
+
+mov eax,4
+mov ebx,1
+mov ecx,entry_not_valid_
+mov edx,entry_not_valid_Len
+int 80h
+jmp endLoop
+
+ return:
+  ret
+
+section .bss
+  choice resd 4
+  num1 resd 2
+  counters resd 2
+  choicez resb 2
+
+;///////////////////////////////////////////// NUMBER 2 ////////////////////////////////////////
+
+section .data 
+    
+    heading:   db "Enter a number between 1 and 20: ", 0
+    printEven:    db "Even numbers: ", 0
+    printOdd: db "Odd numbers: ", 0
+    balik:    db 10, "Again? Y/N: ", 0
+    invalid: db "INVALID ENTRY!", 10, 0
+    footer: db "HAPPY NEW YEAR!", 0
+
+section .text
+    global _start
+ 
+_start:
+    mov  eax, heading
+    call sprint
+ 
+    mov  eax, number
+    call scan
+ 
+    mov  eax, number
+    call atoi
+    mov  [number], eax
+ 
+    cmp eax, 1
+    jl _wrong_entry
+    cmp eax, 20
+    jg _wrong_entry
+ 
+    mov eax, printEven
+    call sprint
+    call _print_even
+ 
+    mov eax, printOdd
+    call sprint
+    call _print_odd
+    jmp _exit
+ 
+_wrong_entry:
+    mov eax, invalid
+    call sprintLF
+    jmp _start
+ 
+_exit:
+    mov  eax, balik
+    call sprint
+ 
+    mov  eax, ope
+    call scan
+ 
+    mov  eax, "."
+    call cprint
+ 
+    mov  eax, 0Ah
+    call cprint
+ 
+    mov al, [ope]
+    cmp al, "Y"
+ 
+    je _start
+ 
+    mov  eax, footer
+    call sprintLF
+ 
+    call quit
+ 
+_print_even:
+    push ebx
+    push ecx
+    push edx
+    mov ecx, 1
+even_loop:
+    mov eax, ecx
+    mov ebx, 2
+    xor edx, edx
+    div ebx
+    cmp edx, 0
+    je print_even
+even_next_digit:
+    inc ecx
+    cmp ecx, [number]
+    je even_done
+    jmp even_loop
+even_done:
+    mov eax, 10
+    call cprint
+    pop edx
+    pop ecx
+    pop ebx
+    ret
+print_even:
+    mov eax, ecx
+    call iprint
+    mov eax, " "
+    call cprint
+    jmp even_next_digit
+ 
+_print_odd:
+    push ebx
+    push ecx
+    push edx
+    mov ecx, 1
+odd_loop:
+    mov eax, ecx
+    mov ebx, 2
+    xor edx, edx
+    div ebx
+    cmp edx, 0
+    jnz print_odd
+odd_next_digit:
+    inc ecx
+    cmp ecx, [number]
+    je odd_done
+    jmp odd_loop
+odd_done:
+    mov eax, 10
+    call cprint
+    pop edx
+    pop ecx
+    pop ebx
+    ret
+print_odd:
+    mov eax, ecx
+    call iprint
+    mov eax, " "
+    call cprint
+    jmp odd_next_digit
+ 
+getLgSm:
+    cmp eax, ebx
+    jl  swap
+    ret
+swap:
+    push ecx
+    mov  ecx, eax
+    mov  eax, ebx
+    mov  ebx, ecx
+    pop  ecx
+    ret
+ 
+scan:
+    mov edx, 255
+    mov ecx, eax
+    mov eax, 3
+    mov ebx, 0
+    int 0x80
+    ret
+ 
+cprint:
+    push eax
+    mov  eax, esp
+    call sprint
+    pop  eax
+    ret
+ 
+atoi:
+    push ebx
+    push ecx
+    push edx
+    push esi
+    mov  esi, eax
+    mov  eax, 0
+    mov  ecx, 0
+ 
+.multiplyLoop:
+    xor ebx, ebx
+    mov bl,  [esi + ecx]
+    cmp bl,  48
+    jl  .finished
+    cmp bl,  57
+    jg  .finished
+ 
+    sub bl,  48
+    add eax, ebx
+    mov ebx, 10
+    mul ebx
+    inc ecx
+    jmp .multiplyLoop
+ 
+.finished:
+    cmp ecx, 0
+    je  .restore
+    mov ebx, 10
+    div ebx
+ 
+.restore:
+    pop esi
+    pop edx
+    pop ecx
+    pop ebx
+    ret
+ 
+iprint:
+    push eax
+    push ecx
+    push edx
+    push esi
+    mov  ecx, 0
+ 
+divideLoop:
+    inc  ecx
+    mov  edx, 0
+    mov  esi, 10
+    idiv esi
+    add  edx, 48
+    push edx
+    cmp  eax, 0
+    jnz  divideLoop
+ 
+printLoop:
+    dec  ecx
+    mov  eax, esp
+    call sprint
+    pop  eax
+    cmp  ecx, 0
+    jnz  printLoop
+ 
+    pop esi
+    pop edx
+    pop ecx
+    pop eax
+    ret
+ 
+iprintLF:
+    call iprint
+    push eax
+    mov  eax, 0Ah
+    call cprint
+    pop  eax
+    ret
+ 
+slen:
+    push ebx
+    mov  ebx, eax
+ 
+nextchar:
+    cmp byte [eax], 0
+    jz  finished
+    inc eax
+    jmp nextchar
+ 
+finished:
+    sub eax, ebx
+    pop ebx
+    ret
+ 
+sprint:
+    push edx
+    push ecx
+    push ebx
+    push eax
+    call slen
+ 
+    mov edx, eax
+    pop eax
+ 
+    mov ecx, eax
+    mov ebx, 1
+    mov eax, 4
+    int 80h
+ 
+    pop ebx
+    pop ecx
+    pop edx
+    ret
+
+sprintLF:
+    call sprint
+    push eax
+    mov  eax, 0Ah
+    call cprint
+    pop  eax
+    ret
+quit:
+    mov ebx, 0
+    mov eax, 1
+    int 80h
+    ret
+ 
+
+section .bss
+    ope:    resb 1
+    number: resb 255

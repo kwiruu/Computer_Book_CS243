@@ -1,0 +1,264 @@
+global _start
+
+section .bss
+
+  inputval1 resd 16
+  inputval2 resd 16
+  number1 resd 2
+  number2 resd 2
+  first resd 2
+  second resd 2
+  choice resb 1
+  buffer resb 16
+
+section .text
+
+_start:
+    call start_start
+    mov eax,0
+    mov dword [inputval1],eax
+    
+  again:
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, menu
+  mov edx, menuLen
+  int 80h
+  
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, choice
+  mov edx, 2
+  int 80h
+
+  lea esi, [choice]
+  movzx edx, byte [esi]
+
+  cmp edx, 0x31 
+  je show_balance
+
+  cmp edx, 0x32
+  je _Deposit
+
+  cmp edx, '3'
+  je _Withdraw
+  
+  cmp edx, 0x34
+  je _exit
+
+  jmp _invalid
+
+  endf:
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+
+show_balance:
+    mov edx,ballen
+    mov ecx,balence
+    mov ebx,1
+    mov eax,4
+    int 80h
+
+    mov edx,balance_len
+    mov ecx,balance
+    mov ebx,1
+    mov eax,4
+    int 80h 
+  
+    mov eax,0
+    mov dword [number2],eax
+    
+  mov eax, dword [inputval1]
+	lea ecx, [buffer + 15]
+	call to_string
+	inc ecx
+	mov eax, 4
+	mov ebx, 1
+	mov edx, 16
+	int 80h
+
+  jmp again
+    
+start_start:
+    mov edx,start_len
+    mov ecx,start
+    mov ebx,1
+    mov eax,4
+    int 80h
+    jmp again
+
+_Deposit:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, deposit_text
+  mov edx, deposit_textLen
+  int 80h
+  
+  mov edx,deposit_amountLen
+  mov ecx,deposit_amount
+  mov ebx,1
+  mov eax,4
+  int 80h
+  
+  call get_input
+  
+ 
+  
+  mov eax, dword [inputval1]
+  mov ebx, dword [number2]
+  add eax, ebx
+    mov dword [inputval1],eax
+	lea ecx, [buffer + 15]
+	call to_string
+	inc ecx
+
+  mov edx,newLineLen
+mov ecx,newLine
+mov ebx,1
+mov eax,4
+int 80h
+
+  jmp again
+
+_Withdraw:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, withdraw_text
+  mov edx, withdraw_textLen
+  int 80h
+
+mov edx,withdraw_len
+mov ecx,withdraw
+mov ebx,1
+mov eax,4
+int 80h
+
+  call get_input
+  mov edx, dword [number2]
+  mov ecx, dword [inputval1]
+  cmp edx,ecx
+  jg runInsuffiencent
+  
+
+  
+  mov eax, dword [inputval1]
+  mov ebx, dword [number2]
+  sub eax, ebx
+  mov dword [inputval1],eax
+  lea ecx, [buffer + 15]
+  
+  mov edx,newLineLen
+mov ecx,newLine
+mov ebx,1
+mov eax,4
+int 80h
+
+
+  jmp again
+
+_exit:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, exitLine
+  mov edx, exitLineLen
+  int 80h
+  jmp endf
+
+_invalid:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, invalidChoiceLine
+  mov edx, invalidChoiceLineLen
+  int 80h
+  jmp again
+
+runInsuffiencent:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, invalidmoney
+  mov edx, invalidmoneyLen
+  int 80h
+  jmp again
+  
+get_input:
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, inputval2
+  mov edx, 16
+  int 80h
+
+  xor eax, eax
+  lea esi, [inputval2]
+  call to_integer
+  
+  mov dword [number2], eax
+  jmp return
+
+to_integer:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp to_integer
+
+to_string:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz to_string
+  jmp return
+
+return:
+  ret
+  
+  section .data
+    balance: db 'Your current balance: P'
+    balance_len equ $-balance
+    
+    withdraw: db 'Enter withdrawal amount: P'
+    withdraw_len equ $-withdraw
+    
+    start: db 'CIT-U',10
+    db 'Automatic Teller Machine',10
+    db 'Programmer: Keiru Vent Ortega Cabili'
+    start_len: equ $-start
+    
+   menu: db 10,10,"Main Menu", 10, "1. Balance Inquiry", 10, "2. Deposit", 10, "3. Withrawal", 10, "4. Exit", 10,"Enter your choice: "
+   menuLen: equ $-menu
+  
+   deposit_amount: db "Enter Deposit Amount: P"
+   deposit_amountLen: equ $-deposit_amount
+
+	deposit_text: db "Deposit",10
+	deposit_textLen: equ $-deposit_text
+
+	withdraw_text: db "Withdrawal",10
+	withdraw_textLen: equ $-withdraw_text
+	
+	exitLine: db "Exiting ATM",10
+            	db 'Thank You!'
+	exitLineLen: equ $-exitLine
+	
+	invalidChoiceLine: db "ERROR! Invalid choice!"
+	invalidChoiceLineLen: equ $-invalidChoiceLine
+ 
+ 	balence: db "Balance Inquiry",10
+	ballen: equ $-balence
+
+	invalidmoney: db "ERROR! Insufficient Balance!"
+	invalidmoneyLen: equ $-invalidmoney
+
+  newLine: db "."
+  newLineLen: equ $-newLine
+
