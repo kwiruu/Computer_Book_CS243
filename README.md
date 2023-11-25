@@ -1,4 +1,4 @@
-# Assembly NASM x86 University Activities Repository
+# Assembly NASM x86 CS243 CIT-U Activities Repository
 
 Welcome to my Assembly NASM x86 repository! This repository contains the projects and activities I've worked on during my Computer Science studies at the university. Here, I explore the world of low-level programming using NASM (Netwide Assembler) for x86 architecture.
 
