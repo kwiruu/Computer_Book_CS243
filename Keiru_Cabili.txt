@@ -1,0 +1,128 @@
+section	.data
+    keiru: db 'INVENTORY SYSTEM',10,'Programmer: KEIRU VENT O. CABILI', 10, 10
+        keirulen: equ $- keiru
+    msg1: db 'Input Product 1 Quantity: '	
+        len1: equ $- msg1
+    msg2: db 'Input Product 2 Quantity: '	
+        len2: equ $- msg2
+    msg3: db 'Total Product Quantity: '	
+        len3: equ $- msg3
+
+section .bss
+    num1 resb 4
+    num2 resb 4
+    res resb 4
+    buffer1 resb 16
+    buffer2 resb 16
+    buffer3 resb 16
+
+section .text
+    global _start
+_start:
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, keiru
+    mov edx, keirulen
+    
+    int 80h
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg1
+    mov edx, len1
+    
+    int 80h
+    
+    mov eax, 3
+    mov ebx, 0
+    lea ecx, [buffer1]
+    mov edx, 16
+    
+    int 80h
+    
+    xor eax, eax
+    lea esi, [buffer1]
+    convert1:
+        movzx edx, byte [esi]
+        cmp dl, 10
+        je done1
+        sub edx, '0'
+        imul eax, 10
+        add eax, edx
+        inc esi
+        jmp convert1
+    done1:
+        mov edi, num1
+        mov [edi], eax
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg2
+    mov edx, len2
+    
+    int 80h
+    
+    mov eax, 3
+    mov ebx, 0
+    lea ecx, [buffer2]
+    mov edx, 16
+    
+    int 80h
+    
+    xor eax, eax
+    lea esi, [buffer2]
+    convert2:
+        movzx edx, byte [esi]
+        cmp dl, 10
+        je done2
+        sub edx, '0'
+        imul eax, 10
+        add eax, edx
+        inc esi
+        jmp convert2
+    done2:
+        mov edi, num2
+        mov [edi], eax
+        
+    ; add ni
+    mov eax, [num1]
+    mov ebx, [num2]
+    add eax, ebx
+    mov [res], eax
+    
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, msg3
+    mov edx, len3
+    
+    int 80h
+    
+    mov eax, [res]
+    lea edi, [buffer3+15]
+    mov byte [edi], 10
+    convert3:
+        dec edi
+        xor edx, edx
+        mov ecx, 10
+        div ecx
+        add dl, '0'
+        mov [edi], dl
+        test eax, eax
+        jnz convert3
+    
+    ;print out
+    mov eax, 4
+    mov ebx, 1
+    lea ecx, [edi]
+    lea edx, [buffer3+16]
+    sub edx, ecx
+    
+    int 80h
+    
+    mov eax, 1
+    mov ebx, 0
+    
+    int 80h
+	       
+

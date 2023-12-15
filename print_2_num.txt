@@ -1,0 +1,84 @@
+section .data
+
+num1 db "Enter first number: ",10
+    num1Len equ $-num1
+    
+num2 db "Enter second number: ",10
+    num2Len equ $-num2    
+
+outy db "Your number is: ",0
+    outyLen equ $-outy
+
+amper db " & ",0
+    amperLen equ $-amper
+
+section .bss
+
+  numy1 resb 2
+  numy2 resb 2
+
+
+section .text
+    global _start
+_start:
+        ; print frst num ask
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, num1
+        mov edx, num1Len
+        int 80h
+        ; input frst num
+        mov eax, 3
+        mov ebx, 0
+        mov ecx, numy1
+        mov edx, 2
+        int 80h
+        
+        
+        ;print scnd num ask
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, num2
+        mov edx, num2Len
+        int 80h
+        ; input scnd num
+        mov eax, 3
+        mov ebx, 0
+        mov ecx, numy2
+        mov edx, 2
+        int 80h
+        
+        ; print ur num is
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, outy
+        mov edx, outyLen
+        int 80h
+        
+        ;print frst num
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, numy1
+        mov edx, 1
+        int 80h
+        
+        ;print amper
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, amper
+        mov edx, amperLen
+        int 80h
+        
+        ;print scnd num
+        mov eax, 4
+        mov ebx, 1
+        mov ecx, numy2
+        mov edx, 1
+        int 80h
+        
+        
+       ; exit my amigo 
+    mov eax, 1
+    mov ebx, 0
+    int 80h
+    

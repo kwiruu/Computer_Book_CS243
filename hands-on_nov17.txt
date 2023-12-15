@@ -1,0 +1,147 @@
+global _start
+
+section .data
+
+  header: db "CIT-U BANK",10,"Automated Teller Machine",10,"Programmer: KEIRU VENT O. CABILI",10,10,"Welcome Customer!",10
+  headerLen: equ $-header
+  
+  menu: db 10, "MAIN MENU", 10,9, "1. Balance Inquiry",10,9, "2. Withdrawal",10, 9,"3. Deposit", 10,9, "4. Bills Payment",10,9, "5. Exit", 10, "Please enter choice: "
+  menuLen: equ $-menu
+
+  additionLine: db 10,"BALANCE INQUIRY",10
+  additionLineLen: equ $-additionLine
+  subtractionLine: db 10,"WITHDRAWAL",10
+  subtractionLineLen: equ $-subtractionLine
+  multiplicationLine: db 10,"DEPOSIT",10
+  multiplicationLineLen: equ $-multiplicationLine
+  divisionLine: db 10,"BILLS PAYMENT",10
+  divisionLineLen: equ $-divisionLine
+  exitLine: db 10,"Exiting ATM.",10,"Thank you for using CIT-U BANK",10,"See you next time."
+  exitLineLen: equ $-exitLine
+  invalidChoiceLine: db 10,"Sorry, wrong input!",10
+  invalidChoiceLineLen: equ $-invalidChoiceLine
+
+section .bss
+  choice resb 1
+
+section .text
+
+_start:
+    mov eax, 4
+  mov ebx, 1
+  mov ecx, header
+  mov edx, headerLen
+  int 80h
+  
+  again:
+
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, menu
+  mov edx, menuLen
+  int 80h
+  mov eax, 3
+  mov ebx, 0
+  mov ecx, choice
+  mov edx, 2
+  int 80h
+
+  lea esi, [choice]
+  movzx edx, byte [esi]
+
+  cmp edx, 0x31 
+  je runAddition
+
+  cmp edx, 0x32
+  je runSubtraction
+
+  cmp edx, 0x33 
+  je runMultiplication
+
+  cmp edx, 0x34 
+  je runDivision
+
+  cmp edx, 0x35 
+  je runExit
+
+  jmp runInvalid
+
+  endf:
+  mov eax, 1
+  mov ebx, 0
+  int 80h
+
+runAddition:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, additionLine
+  mov edx, additionLineLen
+  int 80h
+  jmp again
+
+runSubtraction:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, subtractionLine
+  mov edx, subtractionLineLen
+  int 80h
+  jmp again
+
+runMultiplication:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, multiplicationLine
+  mov edx, multiplicationLineLen
+  int 80h
+  jmp again
+
+runDivision:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, divisionLine
+  mov edx, divisionLineLen
+  int 80h
+  jmp again
+
+runExit:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, exitLine
+  mov edx, exitLineLen
+  int 80h
+  jmp endf
+
+runInvalid:
+  mov eax, 4
+  mov ebx, 1
+  mov ecx, invalidChoiceLine
+  mov edx, invalidChoiceLineLen
+  int 80h
+  jmp again
+
+
+convert_to_int:
+  movzx edx, byte [esi]
+  cmp edx, 0xA
+  je return 
+
+  imul eax, 10
+  sub edx, '0'
+  add eax, edx
+  inc esi
+  jmp convert_to_int
+
+convert_to_str:
+  xor edx, edx 
+  mov ebx, 10
+  div ebx
+  add edx, '0'
+  mov [ecx], dl
+  dec ecx
+
+  test eax, eax
+  jnz convert_to_str
+  jmp return
+
+return:
+  ret

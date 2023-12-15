@@ -1,0 +1,121 @@
+section	.data
+
+citu db'._______________________________________________________________.',10
+     db'|							                                	|',10
+     db'|	         CEBU INSTITUTE OF TECHNOLOGY - UNIVERSITY	        |',10
+     db'|_______________________________________________________________|',10
+     db'|			            |				                        |',10
+     db'|			            |   We envision to be a top Philippine	|',10
+     db'|    VISION STATEMENT	|   university in 2025, a trusted   	|',10
+     db'|			            |   education provider, an outcomes-	|',10
+     db'|		            	|   oriented organization.      		|',10
+     db'|_______________________|_______________________________________|',10
+     db'|				                                   				|',10
+     db'|	            		MISSION STATEMENT	              		|',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|  CIT commits to:	                        					|',10
+     db'|	    Guide learners to  become industry-preferred and life	|',10
+     db'|	    ready professionals.	                				|',10
+     db'|	    Empower people for knowledge generation and creativity	|',10
+     db'|	    Accelerate commmunity development	            		|',10
+     db'|	    Respond proactively to a fast-changing world		    |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|                         CORE VALUES                           |',10
+     db'|_______________________________________________________________|',10
+     db'|                       |                                       |',10
+     db'|                       |     A commitment to go beyond the     |',10
+     db'| CULTURE OF EXCELLENCE |   ordinary; steadfast in delivering   |',10
+     db'|                       |   data-driven, value-optimized and    |',10
+     db'|                       |   client-centric service.             |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                       |                                       |',10
+     db'|       INTEGRITY       |     Uncomprimising adherence to moral |',10
+     db'|                       |   and ethical principles.             |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                       |                                       |',10
+     db'|                       |     Promoting a culture of collabora- |',10
+     db'|        TEAMWORK       |   tion and empowerment/ Commitment    |',10
+     db'|                       |   to purposeful collaboration to adv- |',10
+     db'|                       |   ocate for innovative solutions.     |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                       |                                       |',10
+     db'|                       |     Regard for the welfare of people  |',10
+     db'|                       |   and nature/ Respect for all and st- |',10
+     db'|      UNIVERSALITY     |   ewardship of God`s creation / Prom- |',10
+     db'|                       |   otion of common good of, by and for |',10
+     db'|                       |   all.                                |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                                                               |',10
+     db'|                  STATEMENT OF CORE COMPETENCY                 |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|     Science & Technology is a way of academic life among      |',10
+     db'|   administrators, faculty, and students. In the design, admi- |',10
+     db'|   nistration, and Implementation of curricular programs, tec- |',10
+     db'|   hnology is embedded, articulated, and actuated.             |',10
+     db'|_______________________________________________________________|',10
+citulen	equ	$ - citu		
+
+css  db'._______________________________________________________________.',10
+     db'|							                                	|',10
+     db'|                    COLLEGE OF COMPUTER STUDIES                |',10
+     db'|_______________________________________________________________|',10
+     db'|			            |				                        |',10
+     db'|         VISION        |   A leading Center of Excellence in	|',10
+     db'|                       |   Computing Education.                |',10
+     db'|_______________________|_______________________________________|',10
+     db'|			            |				                        |',10
+     db'|         MISSION       |   To provide quality industry-standa- |',10
+     db'|                       |   rd computing education.             |',10
+     db'|_______________________|_______________________________________|',10
+     db'|				                                   				|',10
+     db'|	            		       GOAL                             |',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|   To produce values-driven, industry-preferred and competent  |',10
+     db'|  computing professionals through; proficient, supportive and  |',10
+     db'|  highly-trained faculty; appropriate facilities; programs and |',10
+     db'|  pedagogy responsive to the community; as well culture that   |',10
+     db'|  encourages Creativity, Innovation, and Team-work.            |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|          BACHELOR OF SCIENCE IN COMPUTER SCIENCE(BSCS)        |',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|   To produce values-driven, industry-preferred and competent  |',10
+     db'|  computing professionals through; proficient, supportive and  |',10
+     db'|  highly-trained faculty; appropriate facilities; programs and |',10
+     db'|  pedagogy responsive to the community; as well culture that   |',10
+     db'|  encourages Creativity, Innovation, and Team-work.            |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|                  STATEMENT OF CORE COMPETENCY                 |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|     Science & Technology is a way of academic life among      |',10
+     db'|   administrators, faculty, and students. In the design, admi- |',10
+     db'|   nistration, and Implementation of curricular programs, tec- |',10
+     db'|   hnology is embedded, articulated, and actuated.             |',10
+     db'|_______________________________________________________________|',10
+csslen equ $ - css
+
+section	.text
+	global _start       ;must be declared for using gcc
+_start:                     ;tell linker entry point
+	mov	edx, citulen    ;message length
+	mov	ecx, citu    ;message to write
+	mov	ebx, 1	    ;file descriptor (stdout)
+	mov	eax, 4	    ;system call number (sys_write)
+	int	0x80        ;call kernel
+	
+	mov	edx, csslen    ;message length
+	mov	ecx, css    ;message to write
+	mov	ebx, 1	    ;file descriptor (stdout)
+	mov	eax, 4	    ;system call number (sys_write)
+	int	0x80        ;call kernel
+	
+	mov	eax, 1	    ;system call number (sys_exit)
+	int	0x80        ;call kernel
+

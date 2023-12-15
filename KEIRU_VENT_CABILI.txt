@@ -1,0 +1,293 @@
+section	.data
+
+citu db '.',9,9,9,'░█████╗░██╗████████╗░░░░░░██╗░░░██╗',10
+     db 9,9,9,'██╔══██╗██║╚══██╔══╝░░░░░░██║░░░██║',10
+     db 9,9,9,'██║░░╚═╝██║░░░██║░░░█████╗██║░░░██║',10
+     db 9,9,9,'██║░░██╗██║░░░██║░░░╚════╝██║░░░██║',10
+     db 9,9,9,'╚█████╔╝██║░░░██║░░░░░░░░░╚██████╔╝',10
+     db 9,9,9,'░╚════╝░╚═╝░░░╚═╝░░░░░░░░░░╚═════╝░',10
+     db'._______________________________________________________________.',10
+     db'|							                                	|',10
+     db'|	         CEBU INSTITUTE OF TECHNOLOGY - UNIVERSITY	        |',10
+     db'|_______________________________________________________________|',10
+     db'|			            |				                        |',10
+     db'|			            |   We envision to be a top Philippine	|',10
+     db'|    VISION STATEMENT	|   university in 2025, a trusted   	|',10
+     db'|			            |   education provider, an outcomes-	|',10
+     db'|		            	|   oriented organization.      		|',10
+     db'|_______________________|_______________________________________|',10
+     db'|				                                   				|',10
+     db'|	            		MISSION STATEMENT	              		|',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|  CIT commits to:	                        					|',10
+     db'|	    Guide learners to  become industry-preferred and life	|',10
+     db'|	    ready professionals.	                				|',10
+     db'|	    Empower people for knowledge generation and creativity	|',10
+     db'|	    Accelerate commmunity development	            		|',10
+     db'|	    Respond proactively to a fast-changing world		    |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|                         CORE VALUES                           |',10
+     db'|_______________________________________________________________|',10
+     db'|                       |                                       |',10
+     db'|                       |     A commitment to go beyond the     |',10
+     db'| CULTURE OF EXCELLENCE |   ordinary; steadfast in delivering   |',10
+     db'|                       |   data-driven, value-optimized and    |',10
+     db'|                       |   client-centric service.             |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                       |                                       |',10
+     db'|       INTEGRITY       |     Uncomprimising adherence to moral |',10
+     db'|                       |   and ethical principles.             |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                       |                                       |',10
+     db'|                       |     Promoting a culture of collabora- |',10
+     db'|        TEAMWORK       |   tion and empowerment/ Commitment    |',10
+     db'|                       |   to purposeful collaboration to adv- |',10
+     db'|                       |   ocate for innovative solutions.     |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                       |                                       |',10
+     db'|                       |     Regard for the welfare of people  |',10
+     db'|                       |   and nature/ Respect for all and st- |',10
+     db'|      UNIVERSALITY     |   ewardship of God`s creation / Prom- |',10
+     db'|                       |   otion of common good of, by and for |',10
+     db'|                       |   all.                                |',10
+     db'|_______________________|_______________________________________|',10
+     db'|                                                               |',10
+     db'|                  STATEMENT OF CORE COMPETENCY                 |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|     Science & Technology is a way of academic life among      |',10
+     db'|   administrators, faculty, and students. In the design, admi- |',10
+     db'|   nistration, and Implementation of curricular programs, tec- |',10
+     db'|   hnology is embedded, articulated, and actuated.             |',10
+     db'|_______________________________________________________________|',10
+citulen	equ	$ - citu		
+
+css  db'._______________________________________________________________.',10
+     db'|							                                	|',10
+     db'|                    COLLEGE OF COMPUTER STUDIES                |',10
+     db'|_______________________________________________________________|',10
+     db'|			            |				                        |',10
+     db'|         VISION        |   A leading Center of Excellence in	|',10
+     db'|                       |   Computing Education.                |',10
+     db'|_______________________|_______________________________________|',10
+     db'|			            |				                        |',10
+     db'|         MISSION       |   To provide quality industry-standa- |',10
+     db'|                       |   rd computing education.             |',10
+     db'|_______________________|_______________________________________|',10
+     db'|				                                   				|',10
+     db'|	            		       GOAL                             |',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|   To produce values-driven, industry-preferred and competent  |',10
+     db'|  computing professionals through; proficient, supportive and  |',10
+     db'|  highly-trained faculty; appropriate facilities; programs and |',10
+     db'|  pedagogy responsive to the community; as well culture that   |',10
+     db'|  encourages Creativity, Innovation, and Team-work.            |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|          BACHELOR OF SCIENCE IN COMPUTER SCIENCE(BSCS)        |',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|   The BS Computer Science program includes the study of comp- |',10
+     db'|  uting concepts and theories, algorithmic foundations and new |',10
+     db'|  developments in computing. The program prepares students to  |',10
+     db'|  design and create algorithmically complex software and deve- |',10
+     db'|  lop new and effective algorithms for solving computing       |',10
+     db'|  problems. The program also includes the study of the standa- |',10
+     db'|  rds and practices in Software Engineering. It prepares stud- |',10
+     db'|  nts to acquire skills and disciplines required for designing |',10
+     db'|  , writing and modifying software components, modules and ap- |',10
+     db'|  plications that comprise software solutions.                 |',10
+     db'|_______________________________________________________________|',10
+     db'|                                                               |',10
+     db'|       Bachelor of Science in Information Technology (BSIT)    |',10
+     db'|_______________________________________________________________|',10
+     db'| 								                                |',10
+     db'|   The BS Information Technology program includes the study of |',10
+     db'|  the utilization of both hardware and software technologies   |',10
+     db'|  involving planning, installing, customizing, operating, man- |',10
+     db'|  aging and administering, and maintaining information techno- |',10
+     db'|  logy infrastructure that provides computing solutions to ad- |',10
+     db'|  dress the needs of an organization. The program prepares gr- |',10
+     db'|  duates to address various user needs involving the selection |',10
+     db'|  development, application, integration and management of com- |',10
+     db'|  puting technologies within an organization.                  |',10
+     db'|_______________________________________________________________|',10,10,10
+csslen equ $ - css
+
+lblsep db 10,10,'______________________________________________',10,10
+    lblseplen equ $-lblsep
+    
+    hash db '='
+    tocenterspace db '      '
+    middlespace db '       '
+    newline db 0xA
+    
+    txtendmsg db 10,10,'Programmer: KEIRU VENT O. CABILI',10,'Date: October 27, 2023'
+    txtendmsglen equ $-txtendmsg
+
+section .bss
+    counter resb 1
+    
+section	.text
+	global _start       ;must be declared for using gcc
+_start:                     ;tell linker entry point
+
+; first requirement
+	mov	edx, citulen    ;message length
+	mov	ecx, citu    ;message to write
+	mov	ebx, 1	    ;file descriptor (stdout)
+	mov	eax, 4	    ;system call number (sys_write)
+	int	0x80        ;call kernel
+; second requirement
+	mov	edx, csslen    ;message length
+	mov	ecx, css    ;message to write
+	mov	ebx, 1	    ;file descriptor (stdout)
+	mov	eax, 4	    ;system call number (sys_write)
+	int	0x80        ;call kernel
+	
+	
+; printing c
+    call printLongHash
+    call printLongHash
+    call printShortHash
+    call printShortHash
+    call printShortHash
+    call printShortHash
+    call printShortHash
+    call printLongHash
+    call printLongHash
+    
+    ; printing newline
+    call printnewline
+    
+    ; printing i
+    call printLongHash
+    call printLongHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printLongHash
+    call printLongHash
+    
+    ; printing newline
+    call printnewline
+    
+    ; printing t
+    call printLongHash
+    call printLongHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    call printCenterShortHash
+    
+    ; printing newline
+    call printnewline
+    
+    ; printing u
+    call printMiddleU
+    call printMiddleU
+    call printMiddleU
+    call printMiddleU
+    call printMiddleU
+    call printMiddleU
+    call printMiddleU
+    call printMiddleU
+    call printLongHash
+    call printLongHash
+    
+    ; printing end message
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, txtendmsg
+    mov edx, txtendmsglen
+    int 80h
+    
+    mov eax, 1
+    int 80h
+    
+printLongHash:
+    mov ecx, 15
+    mov eax, '1'
+    call printHash
+    call printnewline
+    ret
+    
+printShortHash:
+    mov ecx, 4
+    mov eax, '1'
+    call printHash
+    call printnewline
+    ret
+
+printCenterShortHash:
+    call printToCenterSpace
+    mov ecx, 4
+    mov eax, '1'
+    call printHash
+    call printnewline
+    ret
+    
+printHash:
+    mov [counter], eax
+    mov eax, 4
+    mov ebx, 1
+    push ecx
+    
+    mov ecx, hash
+    mov edx, 1
+    int 80h
+    
+    mov eax, [counter]
+    sub eax, '0'
+    inc eax
+    add eax, '0'
+    pop ecx
+    
+    loop printHash
+    ret
+
+printMiddleU:
+    mov ecx, 4
+    mov eax, '1'
+    call printHash
+    call printMiddleSpace
+    mov ecx, 4
+    mov eax, '1'
+    call printHash
+    call printnewline
+    ret
+    
+printToCenterSpace:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, tocenterspace
+    mov edx, 6
+    int 80h
+    ret
+    
+printMiddleSpace:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, middlespace
+    mov edx, 7
+    int 80h
+    ret
+    
+printnewline:
+    mov eax, 4
+    mov ebx, 1
+    mov ecx, newline
+    mov edx, 1
+    int 80h
+    ret
+
